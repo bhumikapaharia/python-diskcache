@@ -4,29 +4,8 @@ on: [push, pull_request]
 
 jobs:
 
-  checks:
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 8
-      matrix:
-        check: [bluecheck, doc8, docs, flake8, isortcheck, mypy, pylint, rstcheck]
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-    - name: Install dependencies
-      run: |
-        pip install --upgrade pip
-        pip install tox
-    - name: Run checks with tox
-      run: |
-        tox -e ${{ matrix.check }}
 
   tests_x86:
-    needs: checks
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 8
